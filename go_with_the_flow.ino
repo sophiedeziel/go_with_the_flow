@@ -1,9 +1,25 @@
-void setup() {
-  // put your setup code here, to run once:
+#include <TM1637Display.h>
 
+#define METER_PIN 2
+#define DIO_PIN 5
+#define CLK_PIN 4
+
+volatile int pulses = 0;
+
+TM1637Display display_liters(CLK_PIN, DIO_PIN);
+
+void setup() {
+  pinMode(METER_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(METER_PIN), countPulses, RISING);
+  Serial.begin(115200);
+  display_liters.setBrightness(0x0a);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  double liters = pulses / 450.0;
+  display_liters.showNumberDecEx(liters * 100, 0b01000000 );
+}
 
+void countPulses() {
+  pulses++;
 }
