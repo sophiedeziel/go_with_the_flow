@@ -16,8 +16,8 @@ void setup() {
 }
 
 void loop() {
-  double liters = pulses / 450.0;
-  display_liters.showNumberDecEx(liters * 100, 0b01000000 );
+  double centiliters = pulses / 4.5;
+  display_liters.showNumberDecEx(centiliters, 0b01000000);
 }
 
 void countPulses() {
